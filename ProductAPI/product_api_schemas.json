@@ -1,0 +1,79 @@
+{
+    "AddProductSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "AddProduct",
+        "type": "object",
+        "required": [
+            "name",
+            "price",
+            "category"
+        ],
+        "properties": {
+            "name": {
+                "type": "string",
+                "description": "Name of the product"
+            },
+            "description": {
+                "type": "string",
+                "description": "Detailed description of the product"
+            },
+            "price": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Price of the product"
+            },
+            "category": {
+                "type": "string",
+                "description": "Category the product belongs to"
+            },
+            "tags": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Tags for search and filtering"
+            },
+            "inStock": {
+                "type": "boolean",
+                "default": true,
+                "description": "Availability of the product"
+            }
+        }
+    },
+    "SearchProductSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "SearchProduct",
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "Search term for product name or description"
+            },
+            "category": {
+                "type": "string",
+                "description": "Filter by category"
+            },
+            "minPrice": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Minimum price filter"
+            },
+            "maxPrice": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Maximum price filter"
+            },
+            "inStock": {
+                "type": "boolean",
+                "description": "Filter by availability"
+            },
+            "tags": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "description": "Filter by tags"
+            }
+        }
+    }
+}

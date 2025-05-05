@@ -1,0 +1,31 @@
+# .NET Core / ASP.NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+TestResults/
+[Bb]uild[Ll]og.*
+*.log
+*.tmp
+[Tt]emp/
+*.nupkg
+*.snupkg
+*.swp
+*.swo
+*.DS_Store
+.idea/
+.vscode/
+.env
+.env.*
+appsettings.*.json
+# Ignore client build artifacts if present in API folder
+ProductClient/node_modules/
+ProductClient/dist/
+ProductClient/build/

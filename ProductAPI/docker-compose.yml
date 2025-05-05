@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Backend API service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product-api
+    ports:
+      - "5298:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - DatabaseSettings__UseCosmosDb=false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - product-network
+
+  # Frontend client service with simplified Node.js setup
+  client:
+    build:
+      context: ./ProductClient
+      dockerfile: Dockerfile
+    container_name: product-client
+    ports:
+      - "80:80"
+    depends_on:
+      api:
+        condition: service_healthy  # Wait for API to be healthy before starting
+    networks:
+      - product-network
+
+networks:
+  product-network:
+    driver: bridge

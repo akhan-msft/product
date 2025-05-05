@@ -1,0 +1,146 @@
+:root {
+  --primary-bg: #f8f9fa;
+  --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --clone-trooper-white: #ffffff;
+  --clone-trooper-blue: #4a7496;
+  --clone-trooper-black: #2d2d30;
+}
+
+body {
+  background-color: var(--primary-bg);
+}
+
+/* Clone Trooper Title Styling */
+.star-wars-title-container {
+  padding: 0.2rem 0; /* Reduced padding from 2rem to 1.5rem */
+  background: linear-gradient(to bottom, var(--clone-trooper-black), var(--primary-bg));
+  border-radius: 8px;
+  margin-bottom: 1.0rem; /* Reduced margin from 2rem to 1.5rem */
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--clone-trooper-blue);
+}
+
+.star-wars-title-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(74, 116, 150, 0.05) 10px,
+    rgba(74, 116, 150, 0.05) 20px
+  );
+  opacity: 0.8;
+  z-index: -1;
+}
+
+/* Title with image layout */
+.title-with-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Reduced gap from 20px to 15px */
+  padding: 0 15px;
+}
+
+.helmet-image-container {
+  flex-shrink: 0;
+}
+
+.helmet-image {
+  width: 80px; /* Keeping logo size the same */
+  height: auto;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.title-text {
+  flex-grow: 1;
+}
+
+.star-wars-title {
+  color: var(--clone-trooper-white);
+  font-family: 'Arial Black', 'Impact', sans-serif;
+  font-size: 2.5rem; /* Reduced from 2.8rem */
+  font-weight: 800;
+  letter-spacing: 1px; /* Reduced from 2px */
+  text-shadow: 2px 2px 4px var(--clone-trooper-black),
+               0 0 10px rgba(74, 116, 150, 0.6);
+  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+  text-transform: uppercase;
+}
+
+.star-wars-subtitle {
+  color: var(--clone-trooper-blue);
+  font-family: 'Century Gothic', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px; /* Reduced from 3px */
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .title-with-image {
+    flex-direction: column;
+  }
+
+  .helmet-image {
+    width: 60px;
+    margin-bottom: 5px; /* Reduced from 10px */
+  }
+
+  .star-wars-title {
+    font-size: 2rem; /* Reduced from 2.2rem */
+  }
+
+  .star-wars-subtitle {
+    font-size: 0.9rem; /* Reduced from 1rem */
+  }
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.card {
+  border-radius: 0.5rem;
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.form-control:focus, .btn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(74, 116, 150, 0.25);
+}
+
+.badge {
+  font-weight: 500;
+  font-size: 0.85em;
+}
+
+/* Clone Trooper themed tab styles */
+.nav-tabs .nav-link.active {
+  color: var(--clone-trooper-white);
+  background-color: var(--clone-trooper-blue);
+  border-color: var(--clone-trooper-blue);
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: var(--clone-trooper-blue);
+  background-color: rgba(74, 116, 150, 0.1);
+}
