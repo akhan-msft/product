@@ -13,18 +13,21 @@ This guide will walk you through setting up a new Azure Container Apps (ACA) env
   ```
 - Existing Azure Container Registry (ACR) in a separate resource group
 
+## Instal ACA extension
+```powershell
+az extension add --name containerapp --upgrade
+az provider register --namespace Microsoft.App
+```
 ---
 
 ## 1. Set Environment Variables
 
-Replace the values as needed.
-
 ```powershell
 $RESOURCE_GROUP = "aca-lab-rg"
 $LOCATION = "westus"
-$ACA_ENV_NAME = "aca-lab-env"
-$ACR_NAME = ""           
-$ACR_RG = ""      
+$ACA_ENV_NAME = "aca-labv-env"
+$ACR_NAME = "akhanacr"           
+$ACR_RG = "akswin-rg"      
 $DOTNET_APP_NAME = "productapi-app"
 $REACT_APP_NAME = "productclient-app"
 ```
@@ -117,7 +120,7 @@ az containerapp create `
   --cpu 1.0 `
   --memory 2.0Gi `
   --min-replicas 1 `
-  --max-replicas 4 `
+  --max-replicas 2 `
   --ingress external `
   --target-port 80
 ```
@@ -128,6 +131,7 @@ az containerapp create `
 
 ```powershell
 az containerapp show --name $DOTNET_APP_NAME --resource-group $RESOURCE_GROUP --query "properties.configuration.ingress.fqdn" -o tsv
+
 az containerapp show --name $REACT_APP_NAME --resource-group $RESOURCE_GROUP --query "properties.configuration.ingress.fqdn" -o tsv
 ```
 
@@ -150,7 +154,39 @@ az containerapp update `
   --scale-rule-http-concurrency 5
 ```
 
+## Setup app for multiple revisions
+```powershell
+az containerapp revision set-mode `
+  --name $DOTNET_APP_NAME`
+  --resource-group $RESOURCE_GROUP `
+  --mode multiple
+```
+
+## Update with new revision
+```powershell
+az containerapp update `
+  --name $DOTNET_APP_NAME `
+  --resource-group $RESOURCE_GROUP `
+  --image "$ACR_LOGIN_SERVER/productapi-app:latest" `
+  --revision-suffix "v2" `
+  --set imagePullPolicy=Always
+```
+
+## Create a batch cron job to run every 5 minute
+```powershell
+az containerapp job create `
+  --name "batch1" `
+  --resource-group $RESOURCE_GROUP `
+  --environment $ACA_ENV_NAME `
+  --trigger-type "Schedule" `
+  --replica-timeout 1800 `
+  --image "mcr.microsoft.com/k8se/quickstart-jobs:latest" `
+  --cpu "0.25" `
+  --memory "0.5Gi" `
+  --cron-expression "*/5 * * * *"
+```
 ## Notes
+
 
 
 ---
